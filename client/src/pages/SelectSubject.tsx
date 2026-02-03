@@ -46,6 +46,7 @@ const SelectSubject: React.FC = () => {
           {subjects.map((subject, index) => (
             <button
               key={subject.id}
+              onClick={() => navigate(`/chat/${subject.id}`)}
               className="cursor-target group w-full text-left relative overflow-hidden
                                      bg-white/5 hover:bg-white/10 border-l-2 border-transparent hover:border-white
                                      p-4 md:p-6 transition-all duration-200"
