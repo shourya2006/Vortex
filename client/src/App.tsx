@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import AnimatedHeroSection from "./components/animated-hero-section";
 import TargetCursor from "./components/Cursor";
 import SelectSemester from "./pages/SelectSemester";
+import SelectSubject from "./pages/SelectSubject";
 import "./App.css";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<AnimatedHeroSection />} />
         <Route path="/select-semester" element={<SelectSemester />} />
+        <Route path="/select-subject/:semesterId" element={<SelectSubject />} />
       </Routes>
     </>
   );

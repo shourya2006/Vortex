@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const SelectSemester: React.FC = () => {
+  const navigate = useNavigate();
   const levels = [
     { id: 1, title: "INITIATION", subtitle: "SEMESTER 01" },
     { id: 2, title: "FOUNDATION", subtitle: "SEMESTER 02" },
@@ -13,6 +15,17 @@ const SelectSemester: React.FC = () => {
       {/* Background Grid Effect */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
 
+      {/* Back Button */}
+      <button
+        onClick={() => navigate("/")}
+        className="cursor-target absolute top-8 left-8 text-white/40 hover:text-white font-mono text-sm tracking-widest transition-colors z-20 flex items-center gap-2 group"
+      >
+        <span className="group-hover:-translate-x-1 transition-transform">
+          &lt;&lt;
+        </span>{" "}
+        BACK_TO_HOME
+      </button>
+
       <h1 className="text-white font-mono text-4xl mb-20 tracking-[0.5em] text-center relative z-10 cursor-default mix-blend-difference">
         SELECT LEVEL
       </h1>
@@ -21,6 +34,7 @@ const SelectSemester: React.FC = () => {
         {levels.map((level) => (
           <button
             key={level.id}
+            onClick={() => navigate(`/select-subject/${level.id}`)}
             className="cursor-target group relative h-[500px] bg-white/5 border border-white/20 backdrop-blur-sm
                                  flex flex-col justify-between p-6 transition-all duration-300 ease-out
                                  hover:border-white hover:bg-white hover:text-black hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
