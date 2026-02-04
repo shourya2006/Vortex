@@ -45,6 +45,7 @@ initAutoSync();
 app.use("/api/auth", require("./auth/route"));
 app.use("/api/courses", require("./courses/route"));
 app.use("/api/sync", require("./sync/route"));
+app.use("/api/chat", require("./chat/route"));
 
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
