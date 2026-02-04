@@ -49,7 +49,7 @@ async function upsertVectors(
     }
 
     console.log(
-      `[Pinecone] ✅ Upserted ${totalUpserted} vectors for ${lectureHash}`,
+      `[Pinecone] Upserted ${totalUpserted} vectors for ${lectureHash}`,
     );
     return totalUpserted;
   } catch (error) {

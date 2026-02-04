@@ -101,9 +101,9 @@ router.post("/:courseSlug", async (req, res) => {
           success: true,
         });
 
-        console.log(`[Sync] ✅ Completed: ${lecture.title}`);
+        console.log(`[Sync] Completed: ${lecture.title}`);
       } catch (error) {
-        console.error(`[Sync] ❌ Failed: ${lecture.title}`, error.message);
+        console.error(`[Sync] Failed: ${lecture.title}`, error.message);
         results.push({
           hash: lecture.hash,
           title: lecture.title,

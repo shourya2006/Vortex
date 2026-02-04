@@ -64,10 +64,10 @@ async function syncCourse(courseSlug, subjectId) {
 
         await markLectureAsProcessed(lecture, vectorCount, subjectId);
         console.log(
-          `[AutoSync] ✅ Done: ${lecture.title} -> namespace: ${subjectId}`,
+          `[AutoSync] Done: ${lecture.title} -> namespace: ${subjectId}`,
         );
       } catch (error) {
-        console.error(`[AutoSync] ❌ Failed: ${lecture.title}`, error.message);
+        console.error(`[AutoSync] Failed: ${lecture.title}`, error.message);
       }
     }
   } catch (error) {
@@ -82,7 +82,7 @@ async function syncAllCourses() {
   }
 
   isSyncing = true;
-  console.log("[AutoSync] 🔄 Starting full sync of all courses...");
+  console.log("[AutoSync] Starting full sync of all courses...");
 
   for (const [subjectId, slugs] of Object.entries(COURSES_BY_SUBJECT)) {
     for (const slug of slugs) {
@@ -90,12 +90,12 @@ async function syncAllCourses() {
     }
   }
 
-  console.log("[AutoSync] ✅ Full sync completed!");
+  console.log("[AutoSync] Full sync completed!");
   isSyncing = false;
 }
 
 function initAutoSync() {
-  console.log("[AutoSync] 🕐 Will sync all courses in 10 seconds...");
+  console.log("[AutoSync] Will sync all courses in 10 seconds...");
   setTimeout(() => {
     syncAllCourses();
   }, 10000);
@@ -103,7 +103,7 @@ function initAutoSync() {
   cron.schedule(
     "0 0 * * *",
     async () => {
-      console.log("[AutoSync] ⏰ Midnight IST - Starting scheduled sync");
+      console.log("[AutoSync] Midnight IST - Starting scheduled sync");
       await syncAllCourses();
     },
     {
@@ -111,7 +111,7 @@ function initAutoSync() {
     },
   );
 
-  console.log("[AutoSync] 📅 Scheduled daily sync at 12:00 AM IST");
+  console.log("[AutoSync] Scheduled daily sync at 12:00 AM IST");
 }
 
 module.exports = {

@@ -52,7 +52,7 @@ async function fetchNewtonToken() {
         { upsert: true, new: true },
       );
 
-      console.log("[Newton Token] ✅ Token fetched and saved to DB!");
+      console.log("[Newton Token] Token fetched and saved to DB!");
       console.log(
         "[Newton Token] User:",
         response.data.name,
@@ -61,12 +61,12 @@ async function fetchNewtonToken() {
       console.log("[Newton Token] Expires at:", expiresAt.toISOString());
       return true;
     } else {
-      console.error("[Newton Token] ❌ No token in response:", response.data);
+      console.error("[Newton Token] No token in response:", response.data);
       return false;
     }
   } catch (error) {
     console.error(
-      "[Newton Token] ❌ Failed to fetch token:",
+      "[Newton Token] Failed to fetch token:",
       error.response?.data || error.message,
     );
     return false;
@@ -94,13 +94,13 @@ async function ensureToken() {
 }
 
 async function initNewtonTokenCron() {
-  console.log("[Newton Token] 🔄 Fetching fresh token on startup...");
+  console.log("[Newton Token] Fetching fresh token on startup...");
   await fetchNewtonToken();
 
   cron.schedule(
     "0 0 * * *",
     async () => {
-      console.log("[Newton Token] ⏰ Midnight IST - Fetching fresh token");
+      console.log("[Newton Token] Midnight IST - Fetching fresh token");
       await fetchNewtonToken();
     },
     {
@@ -108,7 +108,7 @@ async function initNewtonTokenCron() {
     },
   );
 
-  console.log("[Newton Token] 🕐 Cron job scheduled for 12:00 AM IST daily");
+  console.log("[Newton Token] Cron job scheduled for 12:00 AM IST daily");
 }
 
 module.exports = {

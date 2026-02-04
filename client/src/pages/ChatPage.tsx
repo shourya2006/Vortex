@@ -189,7 +189,7 @@ const ChatPage: React.FC = () => {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -460,17 +460,16 @@ const ChatPage: React.FC = () => {
               <span className="pl-6 text-green-500 animate-pulse font-bold">
                 &gt;
               </span>
-              <input
-                type="text"
+              <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyDown}
                 placeholder={
                   currentChatId
                     ? "ENTER COMMAND OR QUERY..."
                     : "CREATE A NEW CHAT TO START..."
                 }
-                className="cursor-target w-full bg-transparent text-white p-6 pl-4 outline-none font-mono placeholder-white/20 text-sm tracking-wide"
+                className="cursor-target w-full bg-transparent text-white p-4 pl-4 outline-none font-mono placeholder-white/20 text-sm tracking-wide resize-none h-[60px] scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
                 disabled={!currentChatId || sending}
                 autoFocus
               />
