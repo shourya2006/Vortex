@@ -34,11 +34,9 @@ const SelectSubject: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-white font-mono p-8 flex flex-col items-center justify-center overflow-hidden relative">
-      {/* Background Grid Effect */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
 
       <div className="max-w-4xl w-full z-10">
-        {/* Back Button */}
         <button
           onClick={() => navigate("/select-semester")}
           className="cursor-target absolute top-8 left-8 text-white/40 hover:text-white font-mono text-sm tracking-widest transition-colors z-20 flex items-center gap-2 group"
@@ -51,7 +49,7 @@ const SelectSubject: React.FC = () => {
 
         <header className="mb-12 border-b border-white/20 pb-4">
           <h1 className="text-2xl md:text-4xl tracking-widest mb-2">
-            // SUBJECT_SELECTION
+            SUBJECT_SELECTION
           </h1>
           <div className="flex gap-4 text-xs md:text-sm opacity-60">
             <span>SYS_REL: v2.0.4</span>
@@ -105,7 +103,6 @@ const SelectSubject: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Hover Scanline Effect */}
                 <div className="absolute inset-0 bg-white/5 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out pointer-events-none" />
               </button>
             ))}

@@ -37,10 +37,8 @@ const ChatPage: React.FC = () => {
 
   return (
     <div className="flex h-screen bg-black text-white font-mono overflow-hidden relative">
-      {/* Background Grid Effect */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
 
-      {/* Back Button */}
       <button
         onClick={() => navigate(`/select-subject/${semesterId}`)}
         className="cursor-target absolute top-4 left-4 text-white/40 hover:text-white text-xs tracking-widest transition-colors z-20 flex items-center gap-2 group"
@@ -51,14 +49,11 @@ const ChatPage: React.FC = () => {
         BACK
       </button>
 
-      {/* Main Chat Area */}
       <div className="flex-1 flex flex-col relative z-10 pl-8 pr-96 pt-16 pb-8">
-        {/* Chat Container */}
         <div className="flex-1 overflow-y-auto space-y-6 mb-24 scrollbar-hide pr-4">
           <div className="text-center opacity-30 my-8 text-xs tracking-[0.2em]">
             --- SYSTEM INITIALIZED: {currentSubject?.name || subjectId} ---
           </div>
-          {/* Mock Messages */}
           <div className="flex gap-4 items-start group">
             <div className="w-8 h-8 rounded-sm bg-green-500/10 border border-green-500/30 flex items-center justify-center shrink-0">
               <span className="text-green-500 text-xs text-bold">AI</span>
@@ -75,7 +70,6 @@ const ChatPage: React.FC = () => {
             </div>
           </div>
         </div>
-        {/* Input Area */}
         <div className="absolute bottom-10 left-8 right-96 max-w-4xl mx-auto px-4 z-30">
           <div className="relative group">
             <div className="relative bg-black/80 border border-white/20 backdrop-blur-xl flex items-center transition-all duration-300 focus-within:border-green-500/50 focus-within:shadow-[0_0_20px_rgba(34,197,94,0.1)]">
@@ -100,17 +94,15 @@ const ChatPage: React.FC = () => {
             <div className="absolute -bottom-1 -right-1 w-2 h-2 border-r border-b border-white pointer-events-none group-focus-within:border-green-500 transition-colors" />
           </div>
           <div className="text-[10px] text-white/20 text-center mt-2 tracking-widest uppercase">
-            // Press [ENTER] to execute
+            Press [ENTER] to execute
           </div>
         </div>
       </div>
 
-      {/* Right Sidebar */}
       <div className="w-80 border-l border-white/10 bg-black/40 backdrop-blur-xl flex flex-col z-20 absolute right-0 top-0 bottom-0">
-        {/* Subject Switcher */}
         <div className="p-6 border-b border-white/10 bg-white/5">
           <label className="block text-[10px] text-green-500/70 mb-2 tracking-[0.2em] font-bold">
-            // ACTIVE_MODULE
+            ACTIVE_MODULE
           </label>
           <div className="relative group">
             <select
@@ -137,7 +129,6 @@ const ChatPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Session Logs */}
         <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
           <label className="block text-[10px] text-white/30 mb-6 tracking-[0.2em] uppercase border-b border-white/5 pb-2">
             Session_Logs
@@ -163,7 +154,6 @@ const ChatPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Logout Button */}
         <div className="p-4 border-t border-white/10 bg-white/5">
           <button
             onClick={() => {

@@ -277,7 +277,6 @@ export function AnimatedHeroSection() {
         startY += wordIndex === 0 ? largeTextHeight + spaceBetweenLines : 0;
       });
 
-      // Initialize ball position near the top right corner
       const ballStartX = canvas.width * 0.9;
       const ballStartY = canvas.height * 0.1;
 

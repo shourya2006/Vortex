@@ -316,10 +316,8 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
     parallaxOn,
   ]);
 
-  // Reset cursor to center on route change
   useEffect(() => {
     if (cursorRef.current) {
-      // Reset Position
       gsap.to(cursorRef.current, {
         x: window.innerWidth / 2,
         y: window.innerHeight / 2,
@@ -328,17 +326,14 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
         overwrite: "auto",
       });
 
-      // Reset Logic State
       isActiveRef.current = false;
       targetCornerPositionsRef.current = null;
       activeStrengthRef.current.current = 0;
 
-      // Kill any active tickers/tweens
       if (tickerFnRef.current) {
         gsap.ticker.remove(tickerFnRef.current);
       }
 
-      // Reset Corners
       if (cornersRef.current) {
         const corners = Array.from(cornersRef.current);
         gsap.killTweensOf(corners);

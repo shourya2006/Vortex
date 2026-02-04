@@ -38,7 +38,6 @@ async function fetchNewtonToken() {
       const expiresInMs = (response.data.expires_in || 23 * 60 * 60) * 1000;
       const expiresAt = new Date(Date.now() + expiresInMs);
 
-      // Save to database
       await NewtonToken.findOneAndUpdate(
         { key: TOKEN_KEY },
         {
@@ -95,11 +94,9 @@ async function ensureToken() {
 }
 
 async function initNewtonTokenCron() {
-  // ALWAYS fetch token on startup (not just when invalid)
   console.log("[Newton Token] 🔄 Fetching fresh token on startup...");
   await fetchNewtonToken();
 
-  // Schedule cron job for 12:00 AM IST - ALWAYS fetch fresh
   cron.schedule(
     "0 0 * * *",
     async () => {

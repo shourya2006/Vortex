@@ -22,7 +22,6 @@ connectDB();
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-// Session for Passport
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "session-secret-change-me",
@@ -30,23 +29,19 @@ app.use(
     saveUninitialized: false,
     cookie: {
       secure: process.env.NODE_ENV === "production",
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      maxAge: 24 * 60 * 60 * 1000,
     },
   }),
 );
 
-// Initialize Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Initialize Newton Token Cron Job
 initNewtonTokenCron();
 
-// Initialize Auto Sync (runs on startup + 12am IST daily)
 const { initAutoSync } = require("./services/autoSync");
 initAutoSync();
 
-// Routes
 app.use("/api/auth", require("./auth/route"));
 app.use("/api/courses", require("./courses/route"));
 app.use("/api/sync", require("./sync/route"));

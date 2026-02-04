@@ -26,7 +26,6 @@ const generateTokens = (userId) => {
   return { accessToken, refreshToken };
 };
 
-// ROUTE 1: Register a new user - POST /api/auth/register
 router.post("/register", async (req, res) => {
   try {
     const { id, secret } = req.body;
@@ -69,7 +68,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// ROUTE 2: Login user - POST /api/auth/login
 router.post("/login", async (req, res) => {
   try {
     const { id, secret } = req.body;
@@ -104,7 +102,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// ROUTE 3: Refresh token - POST /api/auth/refresh
 router.post("/refresh", async (req, res) => {
   try {
     const { refreshToken } = req.body;
@@ -141,7 +138,6 @@ router.post("/refresh", async (req, res) => {
   }
 });
 
-// ROUTE 4: Get user profile - GET /api/auth/profile (Protected)
 router.get("/profile", fetchuser, async (req, res) => {
   try {
     const user = await User.findOne({ id: req.user.id }).select("-secret");
@@ -155,22 +151,17 @@ router.get("/profile", fetchuser, async (req, res) => {
   }
 });
 
-// ROUTE 5: Google OAuth - GET /api/auth/google
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] }),
 );
 
-// ROUTE 6: Google OAuth Callback - GET /api/auth/google/callback
 router.get(
   "/google/callback",
   passport.authenticate("google", { session: false, failureRedirect: "/auth" }),
   (req, res) => {
     try {
-      // Generate JWT tokens for the authenticated user
       const { accessToken, refreshToken } = generateTokens(req.user.id);
-
-      // Redirect to frontend with tokens in URL params
       const clientURL = process.env.CLIENT_URL || "http://localhost:5173";
       res.redirect(
         `${clientURL}/auth/callback?accessToken=${accessToken}&refreshToken=${refreshToken}`,

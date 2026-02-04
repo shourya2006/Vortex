@@ -10,7 +10,6 @@ const AuthPage: React.FC = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Redirect if already authenticated
   useEffect(() => {
     if (authApi.isAuthenticated()) {
       navigate("/select-semester", { replace: true });
@@ -54,10 +53,8 @@ const AuthPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black text-white font-mono flex flex-col items-center justify-center p-8 relative overflow-hidden">
-      {/* Background Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
 
-      {/* Back Button */}
       <button
         onClick={() => navigate("/")}
         className="cursor-target absolute top-8 left-8 text-white/40 hover:text-white font-mono text-sm tracking-widest transition-colors z-20 flex items-center gap-2 group"
@@ -68,10 +65,8 @@ const AuthPage: React.FC = () => {
         ABORT
       </button>
 
-      {/* Auth Terminal Container */}
       <div className="relative z-10 w-full max-w-md">
         <div className="bg-black/80 backdrop-blur-xl border border-white/20 p-8 shadow-[0_0_50px_rgba(255,255,255,0.05)] relative group">
-          {/* Header */}
           <div className="text-center mb-10 overflow-hidden">
             <h1 className="text-xl md:text-2xl tracking-[0.2em] font-bold mb-2 break-words">
               {isLogin ? "IDENTITY_VERIFICATION" : "NEW_RECRUIT_REG"}
@@ -81,7 +76,6 @@ const AuthPage: React.FC = () => {
             </p>
           </div>
 
-          {/* Toggle Tabs */}
           <div className="flex mb-8 border border-white/10 p-1 bg-white/5">
             <button
               onClick={() => setIsLogin(true)}
@@ -105,7 +99,6 @@ const AuthPage: React.FC = () => {
             </button>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleAuth} className="space-y-6">
             <div className="group/input relative">
               <label className="block text-[10px] text-green-500/70 mb-2 tracking-[0.2em] font-bold uppercase">
@@ -176,7 +169,6 @@ const AuthPage: React.FC = () => {
               }}
               className="cursor-target w-full bg-white/5 border border-white/10 text-white py-3 font-bold tracking-[0.1em] hover:bg-white hover:text-black hover:border-white transition-all duration-300 flex items-center justify-center gap-3 group/google"
             >
-              {/* Simple Google Icon SVG Placeholder */}
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -203,7 +195,6 @@ const AuthPage: React.FC = () => {
             </button>
           </form>
 
-          {/* Decorative Elements */}
           <div className="absolute -top-1 -left-1 w-3 h-3 border-l-2 border-t-2 border-white pointer-events-none" />
           <div className="absolute -top-1 -right-1 w-3 h-3 border-r-2 border-t-2 border-white pointer-events-none" />
           <div className="absolute -bottom-1 -left-1 w-3 h-3 border-l-2 border-b-2 border-white pointer-events-none" />

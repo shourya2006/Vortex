@@ -19,12 +19,9 @@ function App() {
         hoverDuration={0.2}
       />
       <Routes>
-        {/* Public Routes */}
         <Route path="/" element={<AnimatedHeroSection />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
-
-        {/* Protected Routes */}
         <Route
           path="/select-semester"
           element={

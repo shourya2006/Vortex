@@ -19,7 +19,6 @@ async function upsertVectors(
     return 0;
   }
 
-  // Create records array
   const records = embeddings.map((embedding, i) => ({
     id: `${lectureHash}_${i}`,
     values: Array.from(embedding).map((v) => Number(v)),
@@ -37,8 +36,6 @@ async function upsertVectors(
 
   try {
     const ns = index.namespace(namespace);
-
-    // Upsert in batches - SDK expects { records: [...] }
     const BATCH_SIZE = 50;
     let totalUpserted = 0;
 
@@ -47,7 +44,6 @@ async function upsertVectors(
       console.log(
         `[Pinecone] Upserting batch ${Math.floor(i / BATCH_SIZE) + 1} (${batch.length} records) to ${namespace}`,
       );
-
       await ns.upsert({ records: batch });
       totalUpserted += batch.length;
     }

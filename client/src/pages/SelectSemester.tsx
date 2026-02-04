@@ -12,10 +12,8 @@ const SelectSemester: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center p-8 overflow-hidden relative">
-      {/* Background Grid Effect */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
 
-      {/* Back Button */}
       <button
         onClick={() => navigate("/")}
         className="cursor-target absolute top-8 left-8 text-white/40 hover:text-white font-mono text-sm tracking-widest transition-colors z-20 flex items-center gap-2 group"
@@ -39,7 +37,6 @@ const SelectSemester: React.FC = () => {
                                  flex flex-col justify-between p-6 transition-all duration-300 ease-out
                                  hover:border-white hover:bg-white hover:text-black hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
           >
-            {/* Header Details */}
             <div className="flex justify-between items-start font-mono text-xs text-white/60 group-hover:text-black/60 transition-colors duration-300">
               <span className="tracking-widest">
                 DATA_MOD_{level.num.toString().padStart(2, "0")}
@@ -49,7 +46,6 @@ const SelectSemester: React.FC = () => {
               </span>
             </div>
 
-            {/* Main Content */}
             <div className="space-y-4 text-left relative z-10 text-white group-hover:text-black transition-colors duration-300">
               <div className="text-8xl font-black tracking-tighter opacity-30 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-2">
                 {level.num}
@@ -62,7 +58,6 @@ const SelectSemester: React.FC = () => {
               </div>
             </div>
 
-            {/* Footer Details */}
             <div className="w-full">
               <div className="h-px w-full bg-current opacity-30 my-4" />
               <div className="flex justify-between items-end font-mono text-xs">
@@ -76,7 +71,6 @@ const SelectSemester: React.FC = () => {
               </div>
             </div>
 
-            {/* Corner Accents (Static) */}
             <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-white pointer-events-none group-hover:border-black" />
             <div className="absolute top-0 right-0 w-2 h-2 border-r border-t border-white pointer-events-none group-hover:border-black" />
             <div className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-white pointer-events-none group-hover:border-black" />

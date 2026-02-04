@@ -9,7 +9,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const location = useLocation();
 
   if (!authApi.isAuthenticated()) {
-    // Redirect to auth page, saving the attempted location
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 

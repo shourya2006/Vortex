@@ -27,32 +27,28 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        // Check if user already exists with this Google ID
         let user = await User.findOne({ googleId: profile.id });
 
         if (user) {
           return done(null, user);
         }
 
-        // Check if user exists with matching email (if available)
         const email =
           profile.emails && profile.emails[0] ? profile.emails[0].value : null;
 
         if (email) {
           user = await User.findOne({ id: email });
           if (user) {
-            // Link Google account to existing user
             user.googleId = profile.id;
             await user.save();
             return done(null, user);
           }
         }
 
-        // Create new user
         user = await User.create({
           id: email || `google_${profile.id}`,
           googleId: profile.id,
-          secret: `oauth_${profile.id}_${Date.now()}`, // Placeholder password for OAuth users
+          secret: `oauth_${profile.id}_${Date.now()}`,
         });
 
         return done(null, user);

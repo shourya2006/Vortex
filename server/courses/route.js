@@ -1,26 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-// Course configuration with Newton School API mappings
 const COURSES = {
   SEM1: {
     name: "Semester 1",
     subjects: [
-      {
-        id: "math1",
-        name: "Mathematics I",
-        slug: "nzwmtdd1ktye",
-      },
-      {
-        id: "psp",
-        name: "Problem Solving with Python",
-        slug: "cw8jd8q33uv9",
-      },
-      {
-        id: "snw",
-        name: "System and Web Essentials",
-        slug: "wrskwgrpxjgu",
-      },
+      { id: "math1", name: "Mathematics I", slug: "nzwmtdd1ktye" },
+      { id: "psp", name: "Problem Solving with Python", slug: "cw8jd8q33uv9" },
+      { id: "snw", name: "System and Web Essentials", slug: "wrskwgrpxjgu" },
     ],
   },
   SEM2: {
@@ -31,16 +18,8 @@ const COURSES = {
         name: "Data Structures and Algorithms",
         slug: "ah5qi2u9urrt",
       },
-      {
-        id: "wap",
-        name: "Web Application Programming",
-        slug: "zqg6ta3917k0",
-      },
-      {
-        id: "math2",
-        name: "Mathematics II",
-        slug: "x0n0l9p7wnzr",
-      },
+      { id: "wap", name: "Web Application Programming", slug: "zqg6ta3917k0" },
+      { id: "math2", name: "Mathematics II", slug: "x0n0l9p7wnzr" },
     ],
   },
   SEM3: {
@@ -71,31 +50,14 @@ const COURSES = {
   SEM4: {
     name: "Semester 4",
     subjects: [
-      {
-        id: "dm",
-        name: "Discrete Mathematics",
-        slug: "ok58b70d78xa",
-      },
-      {
-        id: "dva",
-        name: "Data and Visual Analytics",
-        slug: "c6c54c31a81s",
-      },
-      {
-        id: "genai",
-        name: "Intro to Gen AI",
-        slug: "o781u1d61228",
-      },
-      {
-        id: "sdse",
-        name: "System Design",
-        slug: "f52au2c8qoqs",
-      },
+      { id: "dm", name: "Discrete Mathematics", slug: "ok58b70d78xa" },
+      { id: "dva", name: "Data and Visual Analytics", slug: "c6c54c31a81s" },
+      { id: "genai", name: "Intro to Gen AI", slug: "o781u1d61228" },
+      { id: "sdse", name: "System Design", slug: "f52au2c8qoqs" },
     ],
   },
 };
 
-// GET /api/courses/:semesterId - Get subjects for a semester
 router.get("/:semesterId", (req, res) => {
   const { semesterId } = req.params;
   const semester = COURSES[semesterId.toUpperCase()];
