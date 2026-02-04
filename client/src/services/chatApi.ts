@@ -134,6 +134,18 @@ export const chatApi = {
     return response.json();
   },
 
+  async renameChat(chatId: string, title: string): Promise<{ success: boolean; chat?: Chat; error?: string }> {
+    const response = await fetch(`${API_BASE}/api/chat/${chatId}/rename`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": getToken(),
+      },
+      body: JSON.stringify({ title }),
+    });
+    return response.json();
+  },
+
   async deleteChat(chatId: string): Promise<{ success: boolean; error?: string }> {
     const response = await fetch(`${API_BASE}/api/chat/${chatId}`, {
       method: "DELETE",

@@ -54,7 +54,6 @@ const SelectSubject: React.FC = () => {
           <div className="flex gap-4 text-xs md:text-sm opacity-60">
             <span>SYS_REL: v2.0.4</span>
             <span>TARGET: SEMESTER_{semesterId || "UNKNOWN"}</span>
-            <span>USER: GUEST</span>
           </div>
         </header>
 
@@ -96,9 +95,6 @@ const SelectSubject: React.FC = () => {
                   <div className="hidden md:flex items-center gap-4 text-xs font-mono">
                     <span className="opacity-0 group-hover:opacity-100 transition-opacity">
                       &lt;INITIATE_CHAT&gt;
-                    </span>
-                    <span className="text-green-500 border border-green-500/30 px-2 py-1 bg-green-500/10">
-                      ONLINE
                     </span>
                   </div>
                 </div>

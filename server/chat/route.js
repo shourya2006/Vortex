@@ -7,6 +7,7 @@ const {
   sendMessageStream,
   getChatById,
   getUserChats,
+  renameChat,
   deleteChat,
 } = require("../services/chatService");
 
@@ -141,6 +142,37 @@ router.get("/:chatId", fetchuser, async (req, res) => {
       return res.status(403).json({ error: "Unauthorized" });
     }
     res.status(500).json({ error: "Failed to fetch chat" });
+  }
+});
+
+router.put("/:chatId/rename", fetchuser, async (req, res) => {
+  try {
+    const { chatId } = req.params;
+    const { title } = req.body;
+
+    if (!title || !title.trim()) {
+      return res.status(400).json({ error: "Title is required" });
+    }
+
+    const chat = await renameChat(chatId, req.user.id, title.trim());
+
+    res.json({
+      success: true,
+      chat: {
+        id: chat._id,
+        title: chat.title,
+        updatedAt: chat.updatedAt,
+      },
+    });
+  } catch (error) {
+    console.error("[Chat API] Rename error:", error.message);
+    if (error.message === "Chat not found") {
+      return res.status(404).json({ error: "Chat not found" });
+    }
+    if (error.message === "Unauthorized") {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+    res.status(500).json({ error: "Failed to rename chat" });
   }
 });
 

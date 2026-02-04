@@ -21,6 +21,8 @@ const ChatPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [sending, setSending] = useState(false);
   const [streamingContent, setStreamingContent] = useState("");
+  const [editingChatId, setEditingChatId] = useState<string | null>(null);
+  const [editTitle, setEditTitle] = useState("");
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -191,6 +193,32 @@ const ChatPage: React.FC = () => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
+    }
+  };
+
+  const startEditing = (
+    chatId: string,
+    currentTitle: string,
+    e: React.MouseEvent,
+  ) => {
+    e.stopPropagation();
+    setEditingChatId(chatId);
+    setEditTitle(currentTitle);
+  };
+
+  const saveTitle = async (chatId: string) => {
+    if (!editTitle.trim()) {
+      setEditingChatId(null);
+      return;
+    }
+    try {
+      await chatApi.renameChat(chatId, editTitle);
+      setChatHistory((prev) =>
+        prev.map((c) => (c.id === chatId ? { ...c, title: editTitle } : c)),
+      );
+      setEditingChatId(null);
+    } catch (err) {
+      console.error("Error renaming chat:", err);
     }
   };
 
@@ -527,17 +555,37 @@ const ChatPage: React.FC = () => {
                     <span className="text-[9px] text-white/20">
                       {formatDate(chat.updatedAt)}
                     </span>
-                    <button
-                      onClick={(e) => deleteChat(chat.id, e)}
-                      className="text-red-500/50 hover:text-red-500 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      ✕
-                    </button>
+                    <div className="flex opacity-0 group-hover:opacity-100 transition-opacity gap-1">
+                      <button
+                        onClick={(e) => startEditing(chat.id, chat.title, e)}
+                        className="text-green-500/50 hover:text-green-500 text-[10px]"
+                      >
+                        ✎
+                      </button>
+                      <button
+                        onClick={(e) => deleteChat(chat.id, e)}
+                        className="text-red-500/50 hover:text-red-500 text-[10px]"
+                      >
+                        ✕
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div className="text-xs text-white/60 group-hover:text-white truncate font-medium">
-                  {chat.title}
-                </div>
+                {editingChatId === chat.id ? (
+                  <input
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    onClick={(e) => e.stopPropagation()}
+                    onBlur={() => saveTitle(chat.id)}
+                    onKeyDown={(e) => e.key === "Enter" && saveTitle(chat.id)}
+                    className="w-full bg-black/50 border border-green-500/50 text-white text-xs p-1 outline-none font-medium"
+                    autoFocus
+                  />
+                ) : (
+                  <div className="text-xs text-white/60 group-hover:text-white truncate font-medium">
+                    {chat.title}
+                  </div>
+                )}
                 <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-green-500 scale-y-0 group-hover:scale-y-100 transition-transform duration-200 origin-center" />
               </button>
             ))}

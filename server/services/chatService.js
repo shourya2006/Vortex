@@ -216,6 +216,22 @@ async function getUserChats(userId, subjectId) {
   }));
 }
 
+async function renameChat(chatId, userId, newTitle) {
+  const chat = await Chat.findById(chatId);
+
+  if (!chat) {
+    throw new Error("Chat not found");
+  }
+
+  if (chat.userId !== userId) {
+    throw new Error("Unauthorized");
+  }
+
+  chat.title = newTitle;
+  await chat.save();
+  return chat;
+}
+
 async function deleteChat(chatId, userId) {
   const chat = await Chat.findById(chatId);
 
@@ -237,6 +253,7 @@ module.exports = {
   sendMessageStream,
   getChatById,
   getUserChats,
+  renameChat,
   deleteChat,
   getRelevantContext,
 };
