@@ -13,6 +13,7 @@ const UserSchema = new Schema({
   googleId: {
     type: String,
     unique: true,
+    sparse: true,
   },
   createdAt: {
     type: Date,
@@ -21,5 +22,5 @@ const UserSchema = new Schema({
 });
 
 const User = model("User", UserSchema);
-User.createIndexes();
+// User.createIndexes(); // Removed side-effect
 module.exports = User;

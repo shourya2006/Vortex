@@ -537,9 +537,16 @@ const ChatPage: React.FC = () => {
           </label>
           <div className="space-y-1">
             {chatHistory.map((chat, index) => (
-              <button
+              <div
+                role="button"
+                tabIndex={0}
                 key={chat.id}
                 onClick={() => loadChat(chat.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    loadChat(chat.id);
+                  }
+                }}
                 className={`cursor-target w-full text-left group relative p-3 border transition-all duration-200 ${
                   currentChatId === chat.id
                     ? "border-green-500/30 bg-green-500/10"
@@ -586,7 +593,7 @@ const ChatPage: React.FC = () => {
                   </div>
                 )}
                 <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-green-500 scale-y-0 group-hover:scale-y-100 transition-transform duration-200 origin-center" />
-              </button>
+              </div>
             ))}
             {chatHistory.length === 0 && !loading && (
               <div className="text-center text-white/20 text-xs py-4">
