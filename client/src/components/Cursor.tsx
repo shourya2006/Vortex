@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useCallback, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import { gsap } from "gsap";
 
 export interface TargetCursorProps {
@@ -16,6 +17,7 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
   hoverDuration = 0.2,
   parallaxOn = true,
 }) => {
+  const location = useLocation();
   const cursorRef = useRef<HTMLDivElement>(null);
   const cornersRef = useRef<NodeListOf<HTMLDivElement> | null>(null);
   const spinTl = useRef<gsap.core.Timeline | null>(null);
@@ -82,13 +84,11 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
       if (spinTl.current) {
         spinTl.current.kill();
       }
-      spinTl.current = gsap
-        .timeline({ repeat: -1 })
-        .to(cursor, {
-          rotation: "+=360",
-          duration: spinDuration,
-          ease: "none",
-        });
+      spinTl.current = gsap.timeline({ repeat: -1 }).to(cursor, {
+        rotation: "+=360",
+        duration: spinDuration,
+        ease: "none",
+      });
     };
 
     createSpinTimeline();
@@ -316,17 +316,62 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
     parallaxOn,
   ]);
 
+  // Reset cursor to center on route change
+  useEffect(() => {
+    if (cursorRef.current) {
+      // Reset Position
+      gsap.to(cursorRef.current, {
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2,
+        duration: 0.2,
+        ease: "power2.out",
+        overwrite: "auto",
+      });
+
+      // Reset Logic State
+      isActiveRef.current = false;
+      targetCornerPositionsRef.current = null;
+      activeStrengthRef.current.current = 0;
+
+      // Kill any active tickers/tweens
+      if (tickerFnRef.current) {
+        gsap.ticker.remove(tickerFnRef.current);
+      }
+
+      // Reset Corners
+      if (cornersRef.current) {
+        const corners = Array.from(cornersRef.current);
+        gsap.killTweensOf(corners);
+        const { cornerSize } = constants;
+        const positions = [
+          { x: -cornerSize * 1.5, y: -cornerSize * 1.5 },
+          { x: cornerSize * 0.5, y: -cornerSize * 1.5 },
+          { x: cornerSize * 0.5, y: cornerSize * 0.5 },
+          { x: -cornerSize * 1.5, y: cornerSize * 0.5 },
+        ];
+
+        corners.forEach((corner, index) => {
+          gsap.to(corner, {
+            x: positions[index].x,
+            y: positions[index].y,
+            duration: 0.3,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+        });
+      }
+    }
+  }, [location.pathname, constants]);
+
   useEffect(() => {
     if (isMobile || !cursorRef.current || !spinTl.current) return;
     if (spinTl.current.isActive()) {
       spinTl.current.kill();
-      spinTl.current = gsap
-        .timeline({ repeat: -1 })
-        .to(cursorRef.current, {
-          rotation: "+=360",
-          duration: spinDuration,
-          ease: "none",
-        });
+      spinTl.current = gsap.timeline({ repeat: -1 }).to(cursorRef.current, {
+        rotation: "+=360",
+        duration: spinDuration,
+        ease: "none",
+      });
     }
   }, [spinDuration, isMobile]);
 
