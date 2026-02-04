@@ -8,7 +8,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const SYSTEM_PROMPT = `You are StudyBuddy AI, an expert academic assistant helping students understand their course material. You have access to lecture content that was provided as context.
+const SYSTEM_PROMPT = `You are Vortex AI, an expert academic assistant helping students understand their course material. You have access to lecture content that was provided as context.
 
 IMPORTANT GUIDELINES:
 1. **Prioritize Lecture Content**: Base your answers primarily on the provided lecture context. Quote or reference specific parts when relevant.

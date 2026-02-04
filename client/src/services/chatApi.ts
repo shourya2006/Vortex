@@ -105,7 +105,7 @@ export const chatApi = {
               onChunk(data.content);
             }
           } catch {
-            // Ignore parsing errors for incomplete chunks
+             
           }
         }
       }
