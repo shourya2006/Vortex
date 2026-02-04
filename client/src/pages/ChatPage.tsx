@@ -1,18 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { coursesApi, type Subject } from "../services/coursesApi";
 
 const ChatPage: React.FC = () => {
-  const { subjectId } = useParams();
+  const { semesterId, subjectId } = useParams();
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [currentSubject, setCurrentSubject] = useState<Subject | null>(null);
 
-  const subjects = [
-    { id: "DS", name: "DATA STRUCTURES" },
-    { id: "ALGO", name: "ALGORITHMS" },
-    { id: "OS", name: "OPERATING SYSTEMS" },
-    { id: "CN", name: "COMPUTER NETWORKS" },
-    { id: "DBMS", name: "DATABASE SYSTEMS" },
-  ];
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      if (!semesterId) return;
+      try {
+        const response = await coursesApi.getSubjects(semesterId);
+        if (response.success && response.semester) {
+          setSubjects(response.semester.subjects);
+          const current = response.semester.subjects.find(
+            (s) => s.id === subjectId,
+          );
+          setCurrentSubject(current || null);
+        }
+      } catch (err) {
+        console.error("Error fetching subjects:", err);
+      }
+    };
+    fetchSubjects();
+  }, [semesterId, subjectId]);
 
   const history = [
     { id: 1, title: "Linked Lists Inquiry", date: "2023-10-24" },
@@ -28,7 +42,7 @@ const ChatPage: React.FC = () => {
 
       {/* Back Button */}
       <button
-        onClick={() => navigate(-1)} // Go back to subject selection
+        onClick={() => navigate(`/select-subject/${semesterId}`)}
         className="cursor-target absolute top-4 left-4 text-white/40 hover:text-white text-xs tracking-widest transition-colors z-20 flex items-center gap-2 group"
       >
         <span className="group-hover:-translate-x-1 transition-transform">
@@ -39,12 +53,10 @@ const ChatPage: React.FC = () => {
 
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col relative z-10 pl-8 pr-96 pt-16 pb-8">
-        {" "}
-        {/* Right padding leaves room for sidebar */}
         {/* Chat Container */}
         <div className="flex-1 overflow-y-auto space-y-6 mb-24 scrollbar-hide pr-4">
           <div className="text-center opacity-30 my-8 text-xs tracking-[0.2em]">
-            --- SYSTEM INITIALIZED: {subjectId} ---
+            --- SYSTEM INITIALIZED: {currentSubject?.name || subjectId} ---
           </div>
           {/* Mock Messages */}
           <div className="flex gap-4 items-start group">
@@ -54,17 +66,18 @@ const ChatPage: React.FC = () => {
             <div className="bg-white/5 border border-white/10 p-4 rounded-sm max-w-2xl relative">
               <p className="opacity-80 text-sm leading-relaxed text-green-100/90 shadow-[0_0_10px_rgba(34,197,94,0.1)]">
                 Hello, Unit. Ready for data input on{" "}
-                <span className="text-green-400 font-bold">{subjectId}</span>.
+                <span className="text-green-400 font-bold">
+                  {currentSubject?.name || subjectId}
+                </span>
+                .
               </p>
-              {/* Decorative corner */}
               <div className="absolute -top-1 -left-1 w-2 h-2 border-l border-t border-green-500/30 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           </div>
         </div>
-        {/* Input Area (Bottom Center) */}
+        {/* Input Area */}
         <div className="absolute bottom-10 left-8 right-96 max-w-4xl mx-auto px-4 z-30">
           <div className="relative group">
-            {/* Input Container */}
             <div className="relative bg-black/80 border border-white/20 backdrop-blur-xl flex items-center transition-all duration-300 focus-within:border-green-500/50 focus-within:shadow-[0_0_20px_rgba(34,197,94,0.1)]">
               <span className="pl-6 text-green-500 animate-pulse font-bold">
                 &gt;
@@ -77,14 +90,10 @@ const ChatPage: React.FC = () => {
                 className="cursor-target w-full bg-transparent text-white p-6 pl-4 outline-none font-mono placeholder-white/20 text-sm tracking-wide"
                 autoFocus
               />
-
-              {/* Send Button */}
               <button className="cursor-target px-6 py-2 mr-2 bg-white/5 border border-white/10 hover:bg-green-500 hover:text-black hover:border-green-500 transition-all duration-200 text-xs font-bold tracking-wider">
                 SEND
               </button>
             </div>
-
-            {/* Corner Accents for Input */}
             <div className="absolute -top-1 -left-1 w-2 h-2 border-l border-t border-white pointer-events-none group-focus-within:border-green-500 transition-colors" />
             <div className="absolute -top-1 -right-1 w-2 h-2 border-r border-t border-white pointer-events-none group-focus-within:border-green-500 transition-colors" />
             <div className="absolute -bottom-1 -left-1 w-2 h-2 border-l border-b border-white pointer-events-none group-focus-within:border-green-500 transition-colors" />
@@ -96,9 +105,9 @@ const ChatPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Right Sidebar - History & Config */}
+      {/* Right Sidebar */}
       <div className="w-80 border-l border-white/10 bg-black/40 backdrop-blur-xl flex flex-col z-20 absolute right-0 top-0 bottom-0">
-        {/* Subject Switcher (Top of Sidebar) */}
+        {/* Subject Switcher */}
         <div className="p-6 border-b border-white/10 bg-white/5">
           <label className="block text-[10px] text-green-500/70 mb-2 tracking-[0.2em] font-bold">
             // ACTIVE_MODULE
@@ -106,8 +115,10 @@ const ChatPage: React.FC = () => {
           <div className="relative group">
             <select
               className="w-full bg-black/50 border border-white/20 text-white p-3 text-xs font-mono outline-none cursor-target appearance-none hover:border-green-500/50 transition-colors focus:border-green-500"
-              defaultValue={subjectId}
-              onChange={(e) => navigate(`/chat/${e.target.value}`)}
+              value={subjectId}
+              onChange={(e) =>
+                navigate(`/chat/${semesterId}/${e.target.value}`)
+              }
             >
               {subjects.map((sub) => (
                 <option
@@ -115,19 +126,18 @@ const ChatPage: React.FC = () => {
                   value={sub.id}
                   className="bg-black text-white"
                 >
-                  {sub.name}
+                  {sub.name.toUpperCase()}
                 </option>
               ))}
             </select>
             <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] pointer-events-none text-green-500 opacity-50 group-hover:opacity-100">
               ▼
             </div>
-            {/* Scanline hover effect for dropdown */}
             <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-green-500 group-hover:w-full transition-all duration-500" />
           </div>
         </div>
 
-        {/* Session Logs (History) */}
+        {/* Session Logs */}
         <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
           <label className="block text-[10px] text-white/30 mb-6 tracking-[0.2em] uppercase border-b border-white/5 pb-2">
             Session_Logs
@@ -147,14 +157,13 @@ const ChatPage: React.FC = () => {
                 <div className="text-xs text-white/60 group-hover:text-white truncate font-medium">
                   {item.title}
                 </div>
-                {/* Active indicator line */}
                 <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-green-500 scale-y-0 group-hover:scale-y-100 transition-transform duration-200 origin-center" />
               </button>
             ))}
           </div>
         </div>
 
-        {/* Sidebar Footer - Logout */}
+        {/* Logout Button */}
         <div className="p-4 border-t border-white/10 bg-white/5">
           <button
             onClick={() => {

@@ -1,0 +1,53 @@
+
+https://my.newtonschool.co/api/v1/course/h/nzwmtdd1ktye/lecture/all/?past=true&limit=500&offset=0 ---> SEM1 - MATH
+https://my.newtonschool.co/api/v1/course/h/cw8jd8q33uv9/lecture/all/?past=true&limit=500&offset=0 ---> SEM1 - PSP
+https://my.newtonschool.co/api/v1/course/h/wrskwgrpxjgu/lecture/all/?past=true&limit=500&offset=0 ---> SEM1 - SNW
+
+
+SEM2 ->
+https://my.newtonschool.co/api/v1/course/h/ah5qi2u9urrt/lecture/all/?past=true&limit=500&offset=0 ---> SEM2 - DSA
+https://my.newtonschool.co/api/v1/course/h/x0n0l9p7wnzr/lecture/all/?past=true&limit=500&offset=0 ---> SEM2 - MATH
+https://my.newtonschool.co/api/v1/course/h/zqg6ta3917k0/lecture/all/?past=true&limit=500&offset=0 ---> SEM2 - WAP
+
+
+SEM3 ->
+https://my.newtonschool.co/api/v1/course/h/71w36ui55vki/lecture/all/?past=true&limit=500&offset=0 ---> SEM3 - ADA 1
+https://my.newtonschool.co/api/v1/course/h/5yr840e54q5a/lecture/all/?past=true&limit=500&offset=0 ---> SEM3 - ADA 2
+
+https://my.newtonschool.co/api/v1/course/h/9qlmemzzpt6b/lecture/all/?past=true&limit=500&offset=0 ---> SEM3 - AP 1
+https://my.newtonschool.co/api/v1/course/h/p0f65o4fjzji/lecture/all/?past=true&limit=500&offset=0 ---> SEM3 - AP 2
+
+https://my.newtonschool.co/api/v1/course/h/6addtk39hy8c/lecture/all/?past=true&limit=500&offset=0 ---> SEM3 - DBMS 1
+https://my.newtonschool.co/api/v1/course/h/ico8pvge0zhd/lecture/all/?past=true&limit=500&offset=0 ---> SEM3 - DBMS 2
+
+https://my.newtonschool.co/api/v1/course/h/yai5rx2h6q6k/lecture/all/?past=true&limit=500&offset=0 ---> SEM3 - Math 1
+https://my.newtonschool.co/api/v1/course/h/c7134jweubad/lecture/all/?past=true&limit=500&offset=0 ---> SEM3 - Math 2
+
+
+SEM4 ->
+https://my.newtonschool.co/api/v1/course/h/ok58b70d78xa/lecture/all/?past=true&limit=500&offset=0 ---> SEM4 - Math
+https://my.newtonschool.co/api/v1/course/h/c6c54c31a81s/lecture/all/?past=true&limit=500&offset=0 ---> SEM4 - DVA
+https://my.newtonschool.co/api/v1/course/h/o781u1d61228/lecture/all/?past=true&limit=500&offset=0 ---> SEM4 - GENAI
+https://my.newtonschool.co/api/v1/course/h/f52au2c8qoqs/lecture/all/?past=true&limit=500&offset=0 ---> SEM4 - SDSE
+
+SEM1 -
+MATHEMATICS I
+Promblem Solving with Python
+System and Web Essentials
+
+SEM2 -
+Data Structures and Algorithms
+Web Application Programming
+MATHEMATICS II
+
+SEM3 -
+Analysis and Design of Algorithms
+Advance Programming
+Database Management Systems
+MATHEMATICS III
+
+SEM4 - 
+Discrete Mathematics
+Data and Visual Analytics
+Intro to Gen AI
+System Design

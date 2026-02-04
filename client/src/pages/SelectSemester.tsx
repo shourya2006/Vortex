@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 const SelectSemester: React.FC = () => {
   const navigate = useNavigate();
   const levels = [
-    { id: 1, title: "INITIATION", subtitle: "SEMESTER 01" },
-    { id: 2, title: "FOUNDATION", subtitle: "SEMESTER 02" },
-    { id: 3, title: "INTERMEDIATE", subtitle: "SEMESTER 03" },
-    { id: 4, title: "ADVANCED", subtitle: "SEMESTER 04" },
+    { id: "SEM1", num: 1, title: "INITIATION", subtitle: "SEMESTER 01" },
+    { id: "SEM2", num: 2, title: "FOUNDATION", subtitle: "SEMESTER 02" },
+    { id: "SEM3", num: 3, title: "INTERMEDIATE", subtitle: "SEMESTER 03" },
+    { id: "SEM4", num: 4, title: "ADVANCED", subtitle: "SEMESTER 04" },
   ];
 
   return (
@@ -42,7 +42,7 @@ const SelectSemester: React.FC = () => {
             {/* Header Details */}
             <div className="flex justify-between items-start font-mono text-xs text-white/60 group-hover:text-black/60 transition-colors duration-300">
               <span className="tracking-widest">
-                DATA_MOD_{level.id.toString().padStart(2, "0")}
+                DATA_MOD_{level.num.toString().padStart(2, "0")}
               </span>
               <span className="border border-white/30 px-2 py-0.5 rounded group-hover:border-black/30">
                 STATUS: READY
@@ -52,7 +52,7 @@ const SelectSemester: React.FC = () => {
             {/* Main Content */}
             <div className="space-y-4 text-left relative z-10 text-white group-hover:text-black transition-colors duration-300">
               <div className="text-8xl font-black tracking-tighter opacity-30 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-2">
-                {level.id}
+                {level.num}
               </div>
               <div>
                 <h2 className="text-2xl font-bold tracking-widest mb-1 group-hover:tracking-[0.2em] transition-all duration-300">

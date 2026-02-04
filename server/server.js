@@ -44,6 +44,7 @@ initNewtonTokenCron();
 
 // Routes
 app.use("/api/auth", require("./auth/route"));
+app.use("/api/courses", require("./courses/route"));
 
 app.get("/health", (req, res) => {
   res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
