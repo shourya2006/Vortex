@@ -61,6 +61,11 @@ export const authApi = {
     localStorage.removeItem("isAuthenticated");
   },
 
+  logout() {
+    this.clearTokens();
+    window.location.href = "/";
+  },
+
   isAuthenticated(): boolean {
     return !!localStorage.getItem("accessToken");
   },
