@@ -9,13 +9,25 @@ const EMBEDDING_MODEL = "text-embedding-3-small";
 const EMBEDDING_DIMENSIONS = 1024;
 
 async function generateEmbedding(text) {
-  const response = await openai.embeddings.create({
-    model: EMBEDDING_MODEL,
-    input: text,
-    dimensions: EMBEDDING_DIMENSIONS,
-  });
+  const MAX_RETRIES = 3;
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    const response = await openai.embeddings.create({
+      model: EMBEDDING_MODEL,
+      input: text,
+      dimensions: EMBEDDING_DIMENSIONS,
+    });
 
-  return response.data[0].embedding;
+    const embedding = response.data[0].embedding;
+    if (embedding.length === EMBEDDING_DIMENSIONS) {
+      return embedding;
+    }
+    console.warn(
+      `[Embedding] Wrong dimension ${embedding.length} (expected ${EMBEDDING_DIMENSIONS}), retry ${attempt}/${MAX_RETRIES}`,
+    );
+  }
+  throw new Error(
+    `Failed to get ${EMBEDDING_DIMENSIONS}-dim embedding after ${MAX_RETRIES} retries`,
+  );
 }
 
 async function generateEmbeddings(chunks) {

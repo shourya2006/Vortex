@@ -44,7 +44,12 @@ async function refreshRecommendationsForSubject(subjectId) {
 
   const cachedTitles = new Set(
     (
-      await VideoRecommendation.find({ subjectId }).select("topicTitle").lean()
+      await VideoRecommendation.find({
+        subjectId,
+        recommendations: { $exists: true, $not: { $size: 0 } },
+      })
+        .select("topicTitle")
+        .lean()
     ).map((r) => r.topicTitle),
   );
 

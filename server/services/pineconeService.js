@@ -1,4 +1,24 @@
 const { getIndex } = require("../config/pinecone");
+require("dotenv").config();
+
+const PINECONE_HOST = "studybuddy-t80msv2.svc.aped-4627-b74a.pinecone.io";
+
+async function upsertDirect(vectors, namespace) {
+  const body = JSON.stringify({ vectors, namespace });
+  const res = await fetch(`https://${PINECONE_HOST}/vectors/upsert`, {
+    method: "POST",
+    headers: {
+      "Api-Key": process.env.PINECONE_API_KEY,
+      "Content-Type": "application/json",
+    },
+    body,
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Pinecone upsert failed (${res.status}): ${text}`);
+  }
+  return await res.json();
+}
 
 async function upsertVectors(
   lectureHash,
@@ -7,7 +27,6 @@ async function upsertVectors(
   metadata,
   subjectId,
 ) {
-  const index = getIndex();
   const namespace = subjectId || "default";
 
   console.log(
@@ -35,7 +54,6 @@ async function upsertVectors(
   console.log(`[Pinecone] Records to upsert: ${records.length}`);
 
   try {
-    const ns = index.namespace(namespace);
     const BATCH_SIZE = 50;
     let totalUpserted = 0;
 
@@ -44,7 +62,7 @@ async function upsertVectors(
       console.log(
         `[Pinecone] Upserting batch ${Math.floor(i / BATCH_SIZE) + 1} (${batch.length} records) to ${namespace}`,
       );
-      await ns.upsert({ records: batch });
+      await upsertDirect(batch, namespace);
       totalUpserted += batch.length;
     }
 
